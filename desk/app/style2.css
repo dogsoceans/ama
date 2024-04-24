@@ -46,6 +46,8 @@ html, body {
     padding: 16px 16px 12px;
     background-color: white;
     border-radius: 32px 32px 0px 0px;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .container-header-text {
@@ -53,35 +55,22 @@ html, body {
     flex-direction: column;
     justify-content: center;
   }
-  .name {
+  .header-title {
     font-size: 16px;
 
   }
   
-  .image {
+  .profile-picture {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
     object-fit: cover;
   }
-  .description {
+  .patp-header {
   font-weight: 400;
   }
 
-  .settings-button {
-    display: flex;
-    justify-content: right;
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-
-  .inbox-icon {
-    margin-top: 10px;
-    border-radius: 20px;
-    background-color: #ffffff;
-    padding: 5px;
-  }
 
 
   textarea {
@@ -134,7 +123,10 @@ html, body {
   .qa-container .question::first-letter ,
   .qa-container .answer::first-letter {
     font-size: 25px;
-    padding-left: 20px;
+    font-weight: 600;
+  }
+  .container-form-header .question::first-letter {
+    font-size: 25px;
     font-weight: 600;
 
   }
@@ -153,4 +145,12 @@ html, body {
     height: 2px;
     background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(0, 0, 0, 0), rgb(255, 255, 255, .5),rgba(0, 0, 0, 0),rgb(255, 255, 255));
     margin: 0px 0;
+  }
+
+
+  .return-icon {
+    margin-top: 10px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    padding: 5px;
   }
