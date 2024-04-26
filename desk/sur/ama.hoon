@@ -6,32 +6,35 @@
 +$  action
   $%
     :: user actions
-    [%ask-question text=@t]
-    [%comment reply-to=@ud text=@t]
-    [%like like-to=@ud]
+    [%question text=@t]
+    [%answer text=@t]
+    [%change-image png=@t]
+    [%change-bio text=@t]
+    [%change-name text=@t]
     :: admin actions
-    [%delete post-id=@ud]
     [%set-firewall =firewall]
   ==
 ::
 
+
++$  firewall-setting
+  ?(%block-self)
++$  firewall
+  (unit firewall-setting)
+
 +$  update
   $%
     [%risen values=(list @)]
-    [%reply reply-to=@ud reply=post]
-    [%delete post-id=@ud]
+
   ==
 ::
-+$  post
++$  qa
   $:
     id=@ud
-    text=@t
-    time=@da
-    likes=@ud
+    question=@t
+    answer=@t
   ==
-+$  thread
-  $:
-    root=post
-    replies=(list post)
-  ==
++$  inbox
+  (list qa)
+
 --
