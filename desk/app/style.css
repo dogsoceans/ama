@@ -154,3 +154,37 @@ html, body {
     background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(0, 0, 0, 0), rgb(255, 255, 255, .5),rgba(0, 0, 0, 0),rgb(255, 255, 255));
     margin: 0px 0;
   }
+
+  .return-icon {
+    margin-top: 10px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    padding: 5px;
+  }
+
+  .question-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container-form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 18px;
+  }
+  .container-form-header {
+    display: flex;
+    flex-direction: row;
+    padding: 16px 16px 12px;
+    background-color: white;
+    border-radius: 32px 32px 0px 0px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .container-header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
