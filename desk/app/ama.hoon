@@ -8,7 +8,6 @@
     server,
     schooner,
     verb
-/*  image  %jpeg  /app/hurricane/jpeg
 /*  htmx  %js  /app/htmx/js
 /*  amazero  %html  /app/amazero/html
 /*  style  %css  /app/style/css
@@ -98,16 +97,23 @@
     default  ~(. (default-agent this %|) bowl)
 ::
 ++  action-handler
-  |=  act=action
-  ^-  [(list card) _state]
-  [~ state]
+|=  act=action
+^-  [(list card) _state]
+?+  -.act  `state
+    %question
+  =/  =qa  [+.act +.act]
+  =/  incoming-q  (snoc inbox qa)
+  `state(inbox incoming-q)
+==
+
+
+  
 ::
 ++  http-handler
 |=  [eyre-id=@ta =inbound-request:eyre]
 ^-  (quip card _state)
 =/  =request-line:server 
   (parse-request-line:server url.request.inbound-request)
-  ~&  >  request-line
 =+  send=(cury response:schooner eyre-id)
 ::
 ?+    method.request.inbound-request  
@@ -134,34 +140,37 @@
       [%apps %ama ~]
     ?.  authenticated.inbound-request
       :_  state
-      (send [200 ~ [%manx admin-ui]])
+      (send [200 ~ [%manx admin-front-page]])
     :_  state
-    (send [200 ~ [%manx admin-ui]])
+    (send [200 ~ [%manx admin-front-page]])
     ::
     ::  buttons
     ::
-    [%apps %ama %inbox-icon ~]
+    [%apps %ama %inbox ~]
     ?.  authenticated.inbound-request
       :_  state
-      (send [200 ~ [%manx admin-ui]])::check
+      (send [200 ~ [%manx admin-inbox-page-body]])::check
     :_  state
-    (send [200 ~ [%manx inbox-icon]])
+    (send [200 ~ [%manx admin-inbox-page-body]])
     ::
-    [%apps %ama %return-icon ~]
+    [%apps %ama %return ~]
     ?.  authenticated.inbound-request
       :_  state
-      (send [200 ~ [%manx admin-ui]])
+      (send [200 ~ [%manx admin-front-page-body]])
     :_  state
-    (send [200 ~ [%manx return-icon]])
+    (send [200 ~ [%manx admin-front-page-body]])
 
 
   == 
 ==
+
 ::
 ++  send-update
   |=  =term
   ^-  [(list card) _state]
   `state
+:: 
+
 
 ++  html-head
 ^-  manx
@@ -174,16 +183,13 @@
 ==
 
 ::
-++  admin-body
-^-  manx
-;body(class "body-container");
 
 ++  inbox-icon
 ^-  manx
 ;svg
   =class  "inbox-icon"
-  =hx-get  "/apps/ama/return-icon"
-  =hx-target  "this"
+  =hx-get  "/apps/ama/inbox"
+  =hx-target  "body"
   =hx-swap  "outerHTML"
   =xmlns  "http://www.w3.org/2000/svg"
   =version  "1.1"
@@ -222,8 +228,8 @@
 ^-  manx
 ;svg
   =class  "return-icon"
-  =hx-get  "/apps/ama/inbox-icon"
-  =hx-target  "this"
+  =hx-get  "/apps/ama/return"
+  =hx-target  "body"
   =hx-swap  "outerHTML"
   =fill  "#000000"
   =height  "32px" 
@@ -251,26 +257,86 @@
   ;+  return-icon 
 ==
 ::
-++  admin-ui
+++  admin-front-page
 ^-  manx
 ;html
-;+  html-head
-  ;body
-    ;div.body-container
-      ;+  inbox-container
+  ;+  html-head
+  ;+  admin-front-page-body
+==
+++  admin-front-page-body
+^-  manx
+;body
+  ;div.body-container
+    ;+  inbox-container
+    ;div.question-container
+      ;div.container-form
+        ;div.container-form-header
+          ;img(src "cannad PFP.png", class "image");
+          ;div(class "container-header-text")
+            ;div(class "name"): <b>Ask: </b>~nospur-sontud
+            ;div(class "bio"): flow is the only thing that exists.  Infinity, Absurdity, Beauty in every moment. Urbit Lover💕
+          ==
+          ;+  settings-icon
+        ==
+        ;form(id "question-form")
+          ;textarea(id "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
+        ==
+      ==
+      ;button(type "submit", form "question-form"): Send!
+    ==
+    ;*  
+    %+  turn  inbox-answer
+    |=  n=qa
+    ;div(class "qa-container")
+      ;div(class "question"): {(trip question.n)}
+      ;hr;
+      ;div(class "answer"): {(trip answer.n)}
+    ==
+  ==
+==
+
+++  admin-inbox-page-body
+^-  manx
+;body
+  ;div.body-container
+    ;+  return-container
+    ;div.question-container
+      ;*  
+      %+  turn  inbox-question
+      |=  q=@t
+      ;div.container-form
+        ;div.container-form-header
+          ;div.question: Q:  {(trip q)}
+        ==
+        ;form#question-form
+          ;textarea(id "question-input", placeholder "A:", maxlength "140", required "");
+        ==
+      ==
     ==
   ==
 ==
 
 
-++  public-ui
-^-  manx
-;html
-;+  html-head
-  ;body
-    ;div.body-container
-      ;+  inbox-container
-    ==
-  ==
-==
+
+++  inbox-answer
+^-  (list qa)
+=/  =^inbox  inbox
+=|  ans-inbox=^^inbox
+|-
+?~  inbox.inbox
+  ans-inbox
+?:  =(answer.i.inbox.inbox *@t)
+  $(inbox t.inbox.inbox)
+$(inbox t.inbox.inbox, ans-inbox (snoc inbox.ans-inbox i.inbox.inbox))
+
+++  inbox-question
+^-  (list @t)
+=/  =^inbox  inbox
+=|  q-inbox=(list @t)
+|-
+?~  inbox.inbox
+  q-inbox
+$(inbox t.inbox.inbox, q-inbox (snoc q-inbox question.i.inbox.inbox))
+
+
 --

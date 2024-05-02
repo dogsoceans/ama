@@ -30,11 +30,10 @@
 ::
 +$  qa
   $:
-    id=@ud
     question=@t
-    answer=@t
+    answer=@t  
   ==
 +$  inbox
-  (list qa)
+  inbox=(list qa)
 
 --
