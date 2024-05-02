@@ -243,7 +243,27 @@
   ;path
     =d  "M351.173,149.227H36.4L124.827,60.8c4.053-4.267,3.947-10.987-0.213-15.04c-4.16-3.947-10.667-3.947-14.827,0 L3.12,152.427c-4.16,4.16-4.16,10.88,0,15.04l106.667,106.667c4.267,4.053,10.987,3.947,15.04-0.213 c3.947-4.16,3.947-10.667,0-14.827L36.4,170.56h314.773c65.173,0,118.187,57.387,118.187,128s-53.013,128-118.187,128h-94.827 c-5.333,0-10.133,3.84-10.88,9.067c-0.96,6.613,4.16,12.267,10.56,12.267h95.147c76.907,0,139.52-66.987,139.52-149.333 S428.08,149.227,351.173,149.227z";
 ==
-
+++  send-inbox-icon
+^-  manx
+;svg
+  =width  "32px"
+  =height  "32px"
+  =viewBox  "0 0 24 24"
+  =fill  "none"
+  =xmlns  "http://www.w3.org/2000/svg"
+  ;path
+    =d  "M10.3009 13.6949L20.102 3.89742M10.5795 14.1355L12.8019 18.5804C13.339 19.6545 13.6075 20.1916 13.9458 20.3356C14.2394 20.4606 14.575 20.4379 14.8492 20.2747C15.1651 20.0866 15.3591 19.5183 15.7472 18.3818L19.9463 6.08434C20.2845 5.09409 20.4535 4.59896 20.3378 4.27142C20.2371 3.98648 20.013 3.76234 19.7281 3.66167C19.4005 3.54595 18.9054 3.71502 17.9151 4.05315L5.61763 8.2523C4.48114 8.64037 3.91289 8.83441 3.72478 9.15032C3.56153 9.42447 3.53891 9.76007 3.66389 10.0536C3.80791 10.3919 4.34498 10.6605 5.41912 11.1975L9.86397 13.42C10.041 13.5085 10.1295 13.5527 10.2061 13.6118C10.2742 13.6643 10.3352 13.7253 10.3876 13.7933C10.4468 13.87 10.491 13.9585 10.5795 14.1355Z"
+    =stroke  "#ffffff"
+    =stroke-width  "2"
+    =stroke-linecap  "round"
+    =stroke-linejoin  "round";
+==
+::
+++  send-inbox-button
+^-  manx
+;button.send-button
+  ;+  send-inbox-icon
+==
 ::
 ++  inbox-container
 ^-  manx
@@ -282,7 +302,7 @@
           ;textarea(id "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
         ==
       ==
-      ;button(type "submit", form "question-form"): Send!
+      ;+  send-button
     ==
     ;*  
     %+  turn  inbox-answer
@@ -305,18 +325,21 @@
       %+  turn  inbox-question
       |=  q=@t
       ;div.container-form
-        ;div.container-form-header
-          ;div.question: Q:  {(trip q)}
+        ;div.qa-container
+          ;div.question: {(trip q)}
         ==
         ;form#question-form
-          ;textarea(id "question-input", placeholder "A:", maxlength "140", required "");
+          ;textarea(id "question-input", placeholder "  A:", required "");
+          ;+  send-inbox-button
         ==
       ==
     ==
   ==
 ==
 
-
+++  send-button
+^-  manx
+;button(type "submit", form "question-form"): Send!
 
 ++  inbox-answer
 ^-  (list qa)

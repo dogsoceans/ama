@@ -27,7 +27,11 @@ html, body {
     margin: auto;
     max-width: 800px;
   }
-  
+  #question-form {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+  }
 
   .question-container {
     display: flex;
@@ -71,7 +75,25 @@ html, body {
   font-weight: 400;
   }
 
-
+  .send-button {
+    position: absolute;
+    background-color: #000000;
+    color: #ffffff;
+    border: 3px solid #000000;
+    padding: 0px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 16px;
+    right: 16px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0);
+  }
 
   textarea {
     width: 100%;
@@ -98,7 +120,6 @@ html, body {
     padding: 10px 20px;
     border-radius: 100px;
     cursor: pointer;
-    width: 100%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     height: 60px;
     color:#ffffff;
