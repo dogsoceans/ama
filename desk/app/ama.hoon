@@ -101,7 +101,7 @@
 ^-  [(list card) _state]
 ?+  -.act  `state
     %question
-  =/  =qa  [+.act +.act]
+  =/  =qa  [+.act *@t]
   =/  incoming-q  (snoc inbox qa)
   `state(inbox incoming-q)
 ==
