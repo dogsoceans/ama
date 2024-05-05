@@ -7,7 +7,7 @@
   $%
     :: user actions
     [%question text=@t]
-    [%answer text=@t]
+    [%answer text=@t index=@ud]
     [%change-image png=@t]
     [%change-bio text=@t]
     [%change-name text=@t]

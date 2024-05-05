@@ -1,68 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ask Me Anything</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Me Anything</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="htmx.js"></script>
 </head>
-</html>
 <body>
-  <div class="body-container">
-    <div class="inbox-container">
-      <svg class="inbox-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="32" height="32" viewBox="0 0 100 125" xml:space="preserve">
-        <path d="M12.5,90h75c1.381,0,2.5-1.119,2.5-2.5v-50c0-0.723-0.371-1.498-0.938-1.952l-37.5-30c-0.913-0.73-2.21-0.73-3.123,0 l-37.5,30C10.371,36.002,10,36.777,10,37.5v50C10,88.881,11.119,90,12.5,90z M50,10.702L83.498,37.5L50,64.298L16.502,37.5 L50,10.702z M15,42.702l33.438,26.75c0.114,0.091,0.234,0.171,0.359,0.24c0.748,0.411,1.657,0.411,2.405,0 c0.125-0.068,0.245-0.148,0.359-0.24L85,42.702V85H15V42.702z" fill="#000000" stroke="#000000" stroke-width="2"/>
-        <path d="M51.768,49.268l10-10c0.977-0.976,0.977-2.559,0-3.535c-0.976-0.977-2.56-0.977-3.535,0L56.465,37.5L52.5,41.464V37.5v-10 c0-1.381-1.119-2.5-2.5-2.5s-2.5,1.119-2.5,2.5v10v3.964L43.535,37.5l-1.768-1.768c-0.976-0.977-2.56-0.977-3.535,0 c-0.977,0.976-0.977,2.559,0,3.535l10,10C48.72,49.756,49.36,50,50,50S51.28,49.756,51.768,49.268z" fill="#000000" stroke="#000000" stroke-width="2"/>
-      </svg>
-
-    </div>
-    <div class="question-container">
-      <div class="container-form">
-        <div class="container-form-header">
-          <img src="cannad PFP.png" class="image">
-            <div class="container-header-text">
-              <div class="name"><b>Ask: </b>~nospur-sontud</div>
-              <div class="bio">flow is the only thing that exists.  Infinity, Absurdity, Beauty in every moment. Urbit Lover💕</div>
-            </div>
-          <svg 
-          class="settings-button"
-          fill="none" 
-          height="24" 
-          viewBox="0 0 16 16" 
-          width="24" 
-          xmlns="http://www.w3.org/2000/svg"
-          >
-            <path 
-              d="m2.26726 6.15309c.26172-.80594.69285-1.54574 1.26172-2.1727.09619-.10602.24711-.14381.38223-.0957l1.35948.484c.36857.13115.77413-.06004.90584-.42703.01295-.03609.02293-.07316.02982-.1108l.259-1.41553c.02575-.14074.13431-.25207.27484-.28186.41118-.08714.83276-.13146 1.25987-.13146.42685 0 .84818.04427 1.25912.1313.14049.02976.24904.14102.27485.28171l.25973 1.41578c.07022.38339.43924.63751.82434.5676.0379-.00688.0751-.01681.1113-.02969l1.3595-.48402c.1351-.04811.286-.01032.3822.0957.5689.62696 1 1.36676 1.2618 2.1727.0441.13596.0015.28502-.1079.3775l-1.1019.93152c-.2983.25225-.3348.69756-.0815.99463.0249.02921.0522.05635.0815.08114l1.1019.93153c.1094.09248.152.24154.1079.37751-.2618.80598-.6929 1.54578-1.2618 2.17268-.0962.106-.2471.1438-.3822.0957l-1.3595-.484c-.3685-.1311-.7741.0601-.90581.427-.01295.0361-.02293.0732-.02985.111l-.25971 1.4157c-.02581.1407-.13436.2519-.27485.2817-.41094.087-.83227.1313-1.25912.1313-.42711 0-.84869-.0443-1.25987-.1315-.14053-.0298-.24909-.1411-.27484-.2818l-.25899-1.4155c-.07022-.3834-.43928-.6375-.82433-.5676-.03787.0069-.0751.0168-.11128.0297l-1.35954.484c-.13512.0481-.28604.0103-.38223-.0957-.56887-.6269-1-1.3667-1.26172-2.17268-.04415-.13597-.00158-.28503.10783-.37751l1.1019-.93152c.29835-.25225.33484-.69756.08151-.99463-.02491-.02921-.05217-.05635-.0815-.08114l-1.10191-.93153c-.10941-.09248-.15198-.24154-.10783-.3775zm3.98268 1.84685c0 .9665.7835 1.75 1.75 1.75s1.75-.7835 1.75-1.75-.7835-1.75-1.75-1.75-1.75.7835-1.75 1.75z" 
-              fill="#000000"
-            />
-          </svg>
+    <div class="body-container">
+        <div class="inbox-container">
+            <svg class="inbox-icon" hx-get="/apps/ama/inbox" hx-target="body" hx-swap="outerHTML" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 100 125">
+                <path d="M12.5,90h75c1.381,0,2.5-1.119,2.5-2.5v-50c0-0.723-0.371-1.498-0.938-1.952l-37.5-30c-0.913-0.73-2.21-0.73-3.123,0 l-37.5,30C10.371,36.002,10,36.777,10,37.5v50C10,88.881,11.119,90,12.5,90z M50,10.702L83.498,37.5L50,64.298L16.502,37.5 L50,10.702z M15,42.702l33.438,26.75c0.114,0.091,0.234,0.171,0.359,0.24c0.748,0.411,1.657,0.411,2.405,0 c0.125-0.068,0.245-0.148,0.359-0.24L85,42.702V85H15V42.702z" fill="#000000" stroke="#000000" stroke-width="2"></path>
+            </svg>
         </div>
-        <form id="question-form">
-          <textarea id="question-input" placeholder="ask ~nospur-sontud anything. . ." maxlength="140" required></textarea>
-          <button type="submit" form="question-form">Send!</button>
-        </form>
-      </div>
-      
-    </div>
-    <div class="qa-container">
-      <div class="question"> How are you?</div>
-      <hr>
-      <div class="answer"> I'm great thank you!</div>
-    </div>
-    <div class="qa-container">
-      <div class="question">Q:&nbsp; How are you?</div>
-      <hr>
-      <div class="answer">A:&nbsp; I'm great thank you!</div>
-    </div>
-    <div class="qa-container">
-      <div class="question">Q:&nbsp; How are you?</div>
-      <hr>
-      <div class="answer">A:&nbsp; I'm great thank you!</div>
-    </div>
-
-    
-  </div>
-</body>
-</html>
+        <div class="question-container">
+            <div class="container-form">
+                <div class="container-form-header">
+                    <img src="cannad PFP.png" class="image" />
+                    <div class="container-header-text">
+                        <div class="name"><b>Ask:</b> ~nospur-sontud</div>
+                        <div class="bio">flow is the only thing that exists. Infinity, Absurdity, Beauty in every moment. Urbit Lover💕</div>
+                    </div>
+                    <svg class="settings-button" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="none" viewBox="0 0 16 16">
+                        <path d="m2.26726 6.15309c.26172-.80594.69285-1.54574 1.26172-2.1727.09619-.10602.24711-.14381.38223-.0957l1.35948.484c.36857.13115.77413-.06004.90584-.42703.01295-.03609.02293-.07316.02982-.1108l.259-1.41553c.02575-.14074.13431-.25207.27484-.28186.41118-.08714.83276-.13146 1.25987-.13146.42685 0 .84818.04427 1.25912.1313.14049.02976.24904.14102.27485.28171l.25973 1.41578c.07022.38339.43924.63751.82434.5676.0379-.00688.0751-.01681.1113-.02969l1.3595-.48402c.1351-.04811.286-.01032.3822.0957.5689.62696 1 1.36676 1.2618 2.1727.0441.13596.0015.28502-.1079.3775l-1.1019.93152c-.2983.25225-.3348.69756-.0815.99463.0249.02921.0522.05635.0815.08114l1.1019.93153c.1094.09248.152.24154.1079.37751-.2618.80598-.6929 1.54578-1.2618 2.17268-.0962.106-.2471.1438-.3822.0957l-1.3595-.484c-.3685-.1311-.7741.0601-.90581.427-.01295.0361-.02293.0732-.02985.111l-.25971 1.4157c-.02581.1407-.13436.2519-.27485.2817-.41094.087-.83227.1313-1.25912.1313-.42711 0-.84869-.0443-1.25987-.1315-.14053-.0298-.24909-.1411-.27484-.2818l-.25899-1.4155c-.07022-.3834-.43928-.6375-.82433-.5676-.03787.0069-.0751.0168-.11128.0297l-1.35954.484c-.13512.0481-.28604.0103-.38223-.0957-.56887-.6269-1-1.3667-1.26172-2.17268-.04415-.13597-.00158-.28503.10783-.37751l1.1019-.93152c.29835-.25225.33484-.69756.08151-.99463-.02491-.02921-.05217-.05635-.0815-.08114l-1.10191-.93153c-.10941-.09248-.15198-.24154-.10783-.3775zm3.98268 1.84685c0 .9665.7835 1.75 1.75 1.75s1.75-.7835 1.75-1.75-.7835-1.75-1.75-1.75-1.75.7835-1.75 1.75z" fill="#000000"></path>
+                    </svg>
+                </div>
+                <form id="question-form" hx-post="/apps/ama" hx-swap="none" hx-on--after-request="this.reset()">
+                    <textarea name="question-input" placeholder="ask ~nospur-sontud anything..." maxlength="140" required></textarea>
+                </form>
+            </div>
+            <button type="submit" form="question-form" name="send" value="send">Send!</button>
+        </div>
+        <!-- QA Containers -->
+        <div class="qa-container">
+            <div class="question">
+                <div class="question-label">Q:</div>
+                <span class="question-text">wdqd</span>
+            </div>
+            <hr />
+            <div class="answer">
+                <div class="answer-label">A:</div>
+                <span class="answer-text">pussy</span>
+            </div>
+        </div>
+        <div class="qa-container">
+            <div class="question">
+                <div class="question-label">Q:</div>
+                <span class="question-text">hi fucker</span>
+            </div>
+            <hr />
+            <div class="answer">
+                <div class="answer-label">A:</div>
+                <span class="answer-text">hi</span>
+            </div>
+        </div>
+        <div class="qa-container">
+            <div class="question">
+                <div class="question-label">Q:</div>
+                <span class="question-text">HIIII</span>
+            </div>
+            <hr />
+            <div class="answer">
+                <div class="answer-label">A:</div>
+                <span class="answer-text">wasup nigga</span>
+            </div>
+        </div>
+        <div class="qa-container">
+            <div class="question">
+                <div class="question-label">Q:</div>
+                <span class="question-text">hu</span>
+            </div>
+            <hr />
+            <div class="answer">
+                <div class="answer-label">A:
+                </div>
+                <span class="answer-text">Qwdqwdiuqwhyduqihcudhcukhqwukdhckuqwhckuqwhcdukqwhdcukhqwkuhdcukwqhdckuqwhdcukqwhdckuqhwcdkuqwhdckuhqwcdkuqwchdnkquwhckuqwhdckuqwhcdukwqhdkuqwhcdkuqwhcdukwhqukqhcukqhcqkuwhcdkuqhdckuqwhdckuhqwdcukqwhdckuqwhdcukqwhdckuqwhdckuqhdckuqwhdcukwqdwchkquwhcduhqw</span>
+              </div>
+          </div>
+          </div> <!-- Closing body-container -->
+          </body>
+          </html>

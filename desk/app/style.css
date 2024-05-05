@@ -117,17 +117,7 @@ body {
     margin-top: 18px;
   }
 
-  .qa-container {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    margin-top: 18px;
-    border-radius: 32px 32px 32px 32px;
-    font-size: 16px;
-    font-weight: 400;
-    font: "Avenir Next", Helvetica, Arial, sans-serif;
 
-  }
   .send-button {
     position: absolute;
     background-color: #000000;
@@ -147,32 +137,69 @@ body {
     right: 16px;
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0);
   }
+  .qa-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 18px;
+    border-radius: 32px 32px 32px 32px;
+    font-size: 16px;
+    font-weight: 400;
+    font: "Avenir Next", Helvetica, Arial, sans-serif;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 
+  }
 
-  .qa-container .question::before,
-  .qa-container .answer::before {
-    display: inline;
+  
+
+  .answer-label{
     font-size: 25px;
-    padding-left: 20px;
     font-weight: 600;
+    position: absolute;
+    display: flex;
+    top: 1px;
+    left: 11px;
+  }
+  .question-label{
+    font-size: 25px;
+    font-weight: 600;
+    position: absolute;
+    display: flex;
+    top: 7px;
+    left: 8px;
   }
   
-  .qa-container .question::before {
-    content: "Q:  ";
-  }
-  
-  .qa-container .answer::before {
-    content: "A:  ";
-  }
-.qa-container .question {
+ .question {
     background-color: #ffffff;
     border-radius: 32px 32px 0px 0px;
     padding:10px;
+    text-align: left;
+    position: relative;
+    word-wrap: break-word;
 }
-.qa-container .answer {
+.answer {
     background-color: #ffffff;
     border-radius: 0px 0px 32px 32px;
     padding: 10px;
+    text-align: left;
+    position: relative;
+}
+ .answer-text {
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 30px;
+  align-items: center;
+  justify-content: center;
+
+}
+.question-text {
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 30px;
+  bottom: -6px;
+
+  position: relative;
 }
 .qa-container hr {
     border: none;
@@ -186,6 +213,7 @@ body {
     border-radius: 50%;
     background-color: #ffffff;
     padding: 5px;
+    margin-bottom: 18px; 
   }
 
   .question-container {

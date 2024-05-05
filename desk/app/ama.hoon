@@ -7,6 +7,7 @@
     *ama,
     server,
     schooner,
+    rudder,
     verb
 /*  htmx  %js  /app/htmx/js
 /*  amazero  %html  /app/amazero/html
@@ -98,20 +99,57 @@
 ::
 ++  action-handler
 |=  act=action
-^-  [(list card) _state]
+^-  [(list card) _state] ::removed list card cant poke  now
 ?+  -.act  `state
     %question
   =/  =qa  [+.act *@t]
-  =/  incoming-q  (snoc inbox qa)
-  `state(inbox incoming-q)
+  `state(inbox (snoc inbox qa))
+  ::
+    %answer
+  =/  =qa  (snag index.act inbox)
+  =.  answer.qa  text.act
+  `state(inbox (snap inbox index.act qa))
+==
+::
+:: double action handlers temp solution... 
+:: http post request demands an action, but has wrong shape
+::
+++  action-handler2
+|=  act=action
+^-  [_state]
+?+  -.act  state
+    %question
+  =/  =qa  [+.act *@t]
+  state(inbox (snoc inbox qa))
+  ::
+    %answer
+  =/  =qa  (snag index.act inbox)  
+  =.  answer.qa  text.act
+  state(inbox (snap inbox index.act qa))
 ==
 
-
+++  action-parser
+  |=  body=(unit octs)
+  ^-  $@(null action)
+  =/  args=(map @t @t)
+    ?~(body ~ (frisk q.u.body))
+  ?:  (~(has by args) 'send')
+    [%question (~(got by args) 'question-input')]
+  ?:  (~(has by args) 'send-answer')
+    ~&  [%answer (~(got by args) 'question-input') `@ud`(slav %ud (~(got by args) 'index'))]
+      [%answer (~(got by args) 'question-input') `@ud`(slav %ud (~(got by args) 'index'))]
+  ~
+::
+++  frisk  ::  parse url-encoded form args
+  |=  body=@t
+  %-  ~(gas by *(map @t @t))
+  (fall (rush body yquy:de-purl:html) ~)
   
 ::
 ++  http-handler
 |=  [eyre-id=@ta =inbound-request:eyre]
 ^-  (quip card _state)
+=/  body  body.request.inbound-request
 =/  =request-line:server 
   (parse-request-line:server url.request.inbound-request)
 =+  send=(cury response:schooner eyre-id)
@@ -159,9 +197,14 @@
       (send [200 ~ [%manx admin-front-page-body]])
     :_  state
     (send [200 ~ [%manx admin-front-page-body]])
-
-
   == 
+  ::
+    %'POST'
+  =/  act-p  (action-parser body)
+  ~&  >  act-p
+  ?~  act-p  `state
+  :_  (action-handler2 act-p)
+  (send [202 ~ %json [%o p=[n=[p='message' q=[%s p='Post request successful']] l=~ r=~]]])
 ==
 
 ::
@@ -264,6 +307,14 @@
 ;button.send-button
   ;+  send-inbox-icon
 ==
+++  delete-inbox-button
+^-  manx
+;button(class "send-button", type "input", name "send-answer", value "send-answer")
+  ;+  send-inbox-icon
+==
+::
+
+
 ::
 ++  inbox-container
 ^-  manx
@@ -298,19 +349,26 @@
           ==
           ;+  settings-icon
         ==
-        ;form(id "question-form")
-          ;textarea(id "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
+        ;form(id "question-form", hx-post "/apps/ama", hx-swap "none", hx-on--after-request "this.reset()")
+          ;textarea(name "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
         ==
       ==
-      ;+  send-button
+      ;button(type "submit", form "question-form", name "send", value "send"): Send!
     ==
     ;*  
     %+  turn  inbox-answer
-    |=  n=qa
+    |=  n=(pair qa @ud)
     ;div(class "qa-container")
-      ;div(class "question"): {(trip question.n)}
-      ;hr;
-      ;div(class "answer"): {(trip answer.n)}
+      ;div(class "question")
+        ;div.question-label: Q:  
+        ;span(class "question-text"): {(trip question.p.n)}
+      ==
+      ;hr; 
+      ;div(class "answer")
+        ;div.answer-label: A:
+        ;span(class "answer-text"): {(trip answer.p.n)}
+      ==
+      ;input(type "hidden", name "index", value "{<q.n>}");
     ==
   ==
 ==
@@ -319,47 +377,52 @@
 ^-  manx
 ;body
   ;div.body-container
-    ;+  return-container
+    ;+  return-container 
     ;div.question-container
       ;*  
       %+  turn  inbox-question
-      |=  q=@t
+      |=  q=[@t @ud]
       ;div.container-form
-        ;div.qa-container
-          ;div.question: {(trip q)}
+        ;div(class "question")
+          ;div.question-label: Q:  
+          ;span(class "question-text"): {(trip -.q)}
         ==
-        ;form#question-form
-          ;textarea(id "question-input", placeholder "  A:", required "");
-          ;+  send-inbox-button
+        ;form(id "question-form", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
+          ;textarea(name "question-input", placeholder "A:", required "");
+          ;input(type "hidden", name "index", value "{<+.q>}");
+          ;button(class "send-button", type "input", form "question-form", name "send-answer", value "send-answer")
+            ;+  send-inbox-icon
+          ==
         ==
       ==
     ==
   ==
 ==
 
-++  send-button
-^-  manx
-;button(type "submit", form "question-form"): Send!
 
 ++  inbox-answer
-^-  (list qa)
+^-  (list (pair qa @ud))
 =/  =^inbox  inbox
-=|  ans-inbox=^^inbox
+=|  ans-inbox=(list (pair qa @ud))
+=/  counter=@ud  0
 |-
 ?~  inbox.inbox
   ans-inbox
 ?:  =(answer.i.inbox.inbox *@t)
-  $(inbox t.inbox.inbox)
-$(inbox t.inbox.inbox, ans-inbox (snoc inbox.ans-inbox i.inbox.inbox))
+  $(inbox t.inbox.inbox, counter +(counter))
+$(inbox t.inbox.inbox, counter +(counter), ans-inbox (snoc ans-inbox [i.inbox.inbox counter]))
 
 ++  inbox-question
-^-  (list @t)
+^-  (list (pair @t @ud))
 =/  =^inbox  inbox
-=|  q-inbox=(list @t)
+=|  q-inbox=(list (pair @t @ud))
+=/  counter=@ud  0
 |-
 ?~  inbox.inbox
   q-inbox
-$(inbox t.inbox.inbox, q-inbox (snoc q-inbox question.i.inbox.inbox))
+?.  =(answer.i.inbox.inbox *@t)
+  $(inbox t.inbox.inbox, counter +(counter))
+$(inbox t.inbox.inbox, counter +(counter), q-inbox (snoc q-inbox [question.i.inbox.inbox counter]))
 
 
 --
