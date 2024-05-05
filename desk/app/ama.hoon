@@ -109,6 +109,8 @@
   =/  =qa  (snag index.act inbox)
   =.  answer.qa  text.act
   `state(inbox (snap inbox index.act qa))
+    %delete 
+  `state(inbox (oust [index.act 1] inbox))
 ==
 ::
 :: double action handlers temp solution... 
@@ -126,6 +128,8 @@
   =/  =qa  (snag index.act inbox)  
   =.  answer.qa  text.act
   state(inbox (snap inbox index.act qa))
+    %delete 
+  state(inbox (oust [index.act 1] inbox))
 ==
 
 ++  action-parser
@@ -138,6 +142,8 @@
   ?:  (~(has by args) 'send-answer')
     ~&  [%answer (~(got by args) 'question-input') `@ud`(slav %ud (~(got by args) 'index'))]
       [%answer (~(got by args) 'question-input') `@ud`(slav %ud (~(got by args) 'index'))]
+  ?:  (~(has by args) 'index')
+    [%delete `@ud`(slav %ud (~(got by args) 'index'))]
   ~
 ::
 ++  frisk  ::  parse url-encoded form args
@@ -197,6 +203,13 @@
       (send [200 ~ [%manx admin-front-page-body]])
     :_  state
     (send [200 ~ [%manx admin-front-page-body]])
+    ::
+        [%apps %ama %settings ~]
+    ?.  authenticated.inbound-request
+      :_  state
+      (send [200 ~ [%manx admin-front-page-body]])
+    :_  state
+    (send [200 ~ [%manx admin-settings-page-front]])
   == 
   ::
     %'POST'
@@ -257,6 +270,9 @@
 ^-  manx
 ;svg
   =class  "settings-button"
+  =hx-get  "/apps/ama/settings"
+  =hx-target  "body"
+  =hx-swap  "outerHTML"
   =xmlns  "http://www.w3.org/2000/svg"
   =width  "24px"
   =height  "24px"
@@ -266,6 +282,26 @@
       =d  "m2.26726 6.15309c.26172-.80594.69285-1.54574 1.26172-2.1727.09619-.10602.24711-.14381.38223-.0957l1.35948.484c.36857.13115.77413-.06004.90584-.42703.01295-.03609.02293-.07316.02982-.1108l.259-1.41553c.02575-.14074.13431-.25207.27484-.28186.41118-.08714.83276-.13146 1.25987-.13146.42685 0 .84818.04427 1.25912.1313.14049.02976.24904.14102.27485.28171l.25973 1.41578c.07022.38339.43924.63751.82434.5676.0379-.00688.0751-.01681.1113-.02969l1.3595-.48402c.1351-.04811.286-.01032.3822.0957.5689.62696 1 1.36676 1.2618 2.1727.0441.13596.0015.28502-.1079.3775l-1.1019.93152c-.2983.25225-.3348.69756-.0815.99463.0249.02921.0522.05635.0815.08114l1.1019.93153c.1094.09248.152.24154.1079.37751-.2618.80598-.6929 1.54578-1.2618 2.17268-.0962.106-.2471.1438-.3822.0957l-1.3595-.484c-.3685-.1311-.7741.0601-.90581.427-.01295.0361-.02293.0732-.02985.111l-.25971 1.4157c-.02581.1407-.13436.2519-.27485.2817-.41094.087-.83227.1313-1.25912.1313-.42711 0-.84869-.0443-1.25987-.1315-.14053-.0298-.24909-.1411-.27484-.2818l-.25899-1.4155c-.07022-.3834-.43928-.6375-.82433-.5676-.03787.0069-.0751.0168-.11128.0297l-1.35954.484c-.13512.0481-.28604.0103-.38223-.0957-.56887-.6269-1-1.3667-1.26172-2.17268-.04415-.13597-.00158-.28503.10783-.37751l1.1019-.93152c.29835-.25225.33484-.69756.08151-.99463-.02491-.02921-.05217-.05635-.0815-.08114l-1.10191-.93153c-.10941-.09248-.15198-.24154-.10783-.3775zm3.98268 1.84685c0 .9665.7835 1.75 1.75 1.75s1.75-.7835 1.75-1.75-.7835-1.75-1.75-1.75-1.75.7835-1.75 1.75z"
       =fill  "#000000";
   ==
+::
+++  settings-icon-check
+^-  manx
+;svg
+  =class  "settings-button"
+  =hx-get  "/apps/ama"
+  =hx-target  "body"
+  =hx-swap  "outerHTML"
+  =xmlns  "http://www.w3.org/2000/svg"
+  =width  "24px"
+  =height  "24px"
+  =fill  "none"
+  =viewBox  "0 0 16 16"
+  ;path
+    =d  "m2.26726 6.15309c.26172-.80594.69285-1.54574 1.26172-2.1727.09619-.10602.24711-.14381.38223-.0957l1.35948.484c.36857.13115.77413-.06004.90584-.42703.01295-.03609.02293-.07316.02982-.1108l.259-1.41553c.02575-.14074.13431-.25207.27484-.28186.41118-.08714.83276-.13146 1.25987-.13146.42685 0 .84818.04427 1.25912.1313.14049.02976.24904.14102.27485.28171l.25973 1.41578c.07022.38339.43924.63751.82434.5676.0379-.00688.0751-.01681.1113-.02969l1.3595-.48402c.1351-.04811.286-.01032.3822.0957.5689.62696 1 1.36676 1.2618 2.1727.0441.13596.0015.28502-.1079.3775l-1.1019.93152c-.2983.25225-.3348.69756-.0815.99463.0249.02921.0522.05635.0815.08114l1.1019.93153c.1094.09248.152.24154.1079.37751-.2618.80598-.6929 1.54578-1.2618 2.17268-.0962.106-.2471.1438-.3822.0957l-1.3595-.484c-.3685-.1311-.7741.0601-.90581.427-.01295.0361-.02293.0732-.02985.111l-.25971 1.4157c-.02581.1407-.13436.2519-.27485.2817-.41094.087-.83227.1313-1.25912.1313-.42711 0-.84869-.0443-1.25987-.1315-.14053-.0298-.24909-.1411-.27484-.2818l-.25899-1.4155c-.07022-.3834-.43928-.6375-.82433-.5676-.03787.0069-.0751.0168-.11128.0297l-1.35954.484c-.13512.0481-.28604.0103-.38223-.0957-.56887-.6269-1-1.3667-1.26172-2.17268-.04415-.13597-.00158-.28503.10783-.37751l1.1019-.93152c.29835-.25225.33484-.69756.08151-.99463-.02491-.02921-.05217-.05635-.0815-.08114l-1.10191-.93153c-.10941-.09248-.15198-.24154-.10783-.3775z"
+    =fill  "#000000";
+  ;path
+    =d  "M10.5657 6.56569C10.8721 6.87207 10.8721 7.30083 10.5657 7.60721L8.10721 10.0657C7.80083 10.3721 7.37207 10.3721 7.06569 10.0657L5.56569 8.56569C5.25932 8.25932 5.25932 7.83056 5.56569 7.52419C5.87207 7.21782 6.30083 7.21782 6.60721 7.52419L7.5 8.41697L9.39279 6.52419C9.69917 6.21782 10.1279 6.21782 10.4343 6.52419C10.5657 6.56569 10.5657 6.56569 10.5657 6.56569Z"
+    =fill  "white";
+==
 ::
 ++  return-icon
 ^-  manx
@@ -300,6 +336,20 @@
     =stroke-width  "2"
     =stroke-linecap  "round"
     =stroke-linejoin  "round";
+==
+
+++  delete-button-icon
+^-  manx
+;svg
+  =width  "32px"
+  =height  "32px"
+  =viewBox  "0 0 1024 1024"
+  =xmlns  "http://www.w3.org/2000/svg"
+  =fill  "#ffffff"
+  =stroke  "#ffffff"
+  ;path
+    =fill  "#ffffff"
+    =d  "M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z";
 ==
 ::
 ++  send-inbox-button
@@ -373,6 +423,47 @@
   ==
 ==
 
+++  admin-settings-page-front
+^-  manx
+;body
+  ;div.body-container
+    ;+  inbox-container
+    ;div.question-container
+      ;div.container-form
+        ;div.container-form-header
+          ;img(src "cannad PFP.png", class "image");
+          ;div(class "container-header-text")
+            ;div(class "name"): <b>Ask: </b>~nospur-sontud
+            ;div(class "bio"): flow is the only thing that exists.  Infinity, Absurdity, Beauty in every moment. Urbit Lover💕
+          ==
+          ;+  settings-icon-check
+        ==
+        ;form(id "question-form", hx-post "/apps/ama", hx-swap "none", hx-on--after-request "this.reset()")
+          ;textarea(name "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
+        ==
+      ==
+      ;button(type "submit", form "question-form", name "send", value "send"): Send!
+    ==
+    ;*  
+    %+  turn  inbox-answer
+    |=  n=(pair qa @ud)
+    ;div(class "qa-container")
+      ;div(class "question")
+        ;button(class "x-button", type "input", name "index", value "{<q.n>}", hx-post "/apps/ama/settings", hx-swap "delete", hx-target "closest .qa-container")
+          ;+  delete-button-icon
+        ==
+        ;div.question-label: Q:  
+          ;span(class "question-text"): {(trip question.p.n)}
+        ==
+      ;hr; 
+      ;div(class "answer")
+        ;div.answer-label: A:
+        ;span(class "answer-text"): {(trip answer.p.n)}
+      ==
+    ==
+  ==
+==
+
 ++  admin-inbox-page-body
 ^-  manx
 ;body
@@ -384,6 +475,9 @@
       |=  q=[@t @ud]
       ;div.container-form
         ;div(class "question")
+          ;button(class "x-button", type "input", name "delete", value "delete")
+            ;+  delete-button-icon
+          ==
           ;div.question-label: Q:  
           ;span(class "question-text"): {(trip -.q)}
         ==

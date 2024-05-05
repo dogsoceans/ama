@@ -13,6 +13,7 @@
     [%change-name text=@t]
     :: admin actions
     [%set-firewall =firewall]
+    [%delete index=@ud]
   ==
 ::
 
