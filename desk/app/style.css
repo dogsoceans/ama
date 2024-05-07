@@ -60,11 +60,20 @@ body {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-    object-fit: cover;
+    overflow: hidden; 
+    flex-shrink: 0;
   }
+  .image img {
+    width: 100%
+  }
+
   .description {
   font-weight: 400;
   }
+  .space {
+  height: 40px;
+  }
+
 
   .settings-button {
     display: flex;
@@ -73,12 +82,64 @@ body {
     flex-shrink: 0;
   }
 
+  .settings-button2 {
+    display: flex;
+    justify-content: right;
+    margin-left: auto;
+    flex-shrink: 0;
+    position: relative;
+    bottom: 30px;
+    right: 0px; 
+  }
+
+
   .inbox-icon {
     margin-top: 10px;
     border-radius: 50%;
     background-color: #ffffff;
     padding: 5px;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
+    
+  }
+  .inbox-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between; 
+  }
+  .copy-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 20px 20px 20px 20px;
+  height: min-content;
+  margin-top: 14px;
+  }
+  .copy-container p {
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    }
+
+
+  input[name="bio"] {
+    width: 95%; 
+    border: 1px solid #ccc; /
+       
+}
+input[name="name"] {
+  border: 1px solid #ccc; /
+     
+}
+  form#settings-form {
+    width: 90%;
+    margin: 0px;
+
   }
 
 
@@ -231,7 +292,31 @@ body {
     border-radius: 50%;
     background-color: #ffffff;
     padding: 5px;
-    margin-bottom: 18px; 
+  }
+
+  .powered {
+    font-family: Urbit Sans;
+    font-size: 24px;
+    padding: 10px;
+    color:#ffffff;
+    font-weight: 600;
+    text-align: right;
+    position: fixed;
+    bottom: 3px;
+    right: 3px
+  }
+  
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px 50px 0px 0px;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    right: 150px;
+    width: 50px;
+    height: 50px;
   }
 
   .question-container {
@@ -262,16 +347,24 @@ body {
     justify-content: center;
   }
 
-  .fade-out.htmx-swapping {
-    opacity: 0;
-    transition: opacity 1s ease-out;
+  @font-face {
+    font-family: Urbit Sans;
+    src: url(https://assembly.urbit.org/_next/static/media/UrbitSans-Light.07739c1a.otf);
+    font-weight: 300;
+    font-style: normal;
   }
-
-  #fade-in.htmx-added {
-    opacity: 0;
+  
+  @font-face {
+    font-family: Urbit Sans;
+    src: url(https://assembly.urbit.org/_next/static/media/UrbitSans-Regular.108abb2f.otf);
+    font-weight: 400;
+    font-style: normal;
   }
-  #fade-in {
-    opacity: 1;
-    transition: opacity 0.5s ease-out, height 0.5s ease-out;
-
+  
+  @font-face {
+    font-family: Urbit Sans;
+    src: url(https://assembly.urbit.org/_next/static/media/UrbitSans-Medium.a5a9ec11.otf);
+    font-weight: 500;
+    font-style: normal;
   }
+  

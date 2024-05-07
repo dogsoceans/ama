@@ -9,13 +9,14 @@
     [%question text=@t]
     [%answer text=@t index=@ud]
     [%change-image png=@t]
-    [%change-bio text=@t]
+    [%change-bio name=@t bio=@t image=@t]
     [%change-name text=@t]
+    [%set (unit cord)]
     :: admin actions
     [%set-firewall =firewall]
     [%delete index=@ud]
+
   ==
-::
 
 
 +$  firewall-setting
