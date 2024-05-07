@@ -682,10 +682,10 @@
           ;div.question-label: Q:  
           ;span(class "question-text"): {(trip -.q)}
         ==
-        ;form(id "question-form", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
+        ;form(id "question-form")
           ;textarea(name "question-input", placeholder "A:");
           ;input(type "hidden", name "index", value "{<+.q>}");
-          ;button(class "send-button", type "input", form "question-form", name "send-answer", value "send-answer")
+          ;button(class "send-button", type "input", form "question-form", name "send-answer", value "send-answer", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
             ;+  send-inbox-icon
           ==
         ==
@@ -715,10 +715,10 @@
           ;div.question-label: Q:  
           ;span(class "question-text"): {(trip -.q)}
         ==
-        ;form(id "question-form", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
+        ;form(id "question-form")
           ;textarea(name "question-input", placeholder "A:", required "");
           ;input(type "hidden", name "index", value "{<+.q>}");
-          ;button(class "send-button", type "input", form "question-form", name "send-answer", value "send-answer")
+          ;button(class "send-button", type "input", form "question-form", name "send-answer", value "send-answer", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
             ;+  send-inbox-icon
           ==
         ==
