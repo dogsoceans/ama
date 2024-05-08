@@ -1,13 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('htmx:afterRequest', function(event) {
+        const xhr = event.detail.xhr;  // Access the XMLHttpRequest object used by HTMX
+        const customHeader = xhr.getResponseHeader('cats');
+        const customHeader2 = xhr.getResponseHeader('cats2');
+        const customHeader3 = xhr.getResponseHeader('cats3');
 
-        if (event.detail.requestConfig.verb.toUpperCase() === 'POST' &&
-            event.detail.requestConfig.path === '/apps/ama/bio') {
-            console.log('Reloading due to POST request to /apps/ama/bio');
+        if (customHeader === 'cats') {
+            console.log('.refresh triggered');
             setTimeout(function() {
-                window.location.reload();  
-            }, 001);
+                htmx.trigger('.refresh', 'click');  
+            }, 500);
         }
+
+        if (customHeader2 === 'cats2') {
+            console.log('.refresh triggered');
+            setTimeout(function() {
+                htmx.trigger('.refresh', 'click');  
+            }, 500);
+        }
+        if (customHeader3 === 'cats3') {
+            console.log('.refresh triggered');
+            setTimeout(function() {
+                htmx.trigger('.refresh', 'click');  
+            }, 500);
+        }
+
     });
 
 
@@ -23,5 +40,5 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
             });
         }
-
+        
 });

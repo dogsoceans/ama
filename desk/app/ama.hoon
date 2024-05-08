@@ -253,7 +253,23 @@
         (send [404 ~ [%plain "404 - Not Found"]]) 
       ?~  act-p  `state
          :_  (action-handler2 act-p)
-       (send [200 ~ [%manx admin-front-page-body]]) 
+       (send [200 ~['cats2'^'cats2'] [%manx admin-front-page-body]]) 
+      [%apps %ama %settings %inbox ~]
+    ?.  authenticated.inbound-request
+        ?~  act-p  `state
+          :_  (action-handler2 act-p)
+        (send [404 ~ [%plain "404 - Not Found"]]) 
+      ?~  act-p  `state
+         :_  (action-handler2 act-p)
+       (send [200 ~['cats'^'cats'] [%manx admin-settings-page-inbox]]) 
+      [%apps %ama %settings ~]
+    ?.  authenticated.inbound-request
+        ?~  act-p  `state
+          :_  (action-handler2 act-p)
+        (send [404 ~ [%plain "404 - Not Found"]]) 
+      ?~  act-p  `state
+         :_  (action-handler2 act-p)
+       (send [200 ~['cats3'^'cats3'] [%manx admin-settings-page-front]]) 
   ==
 ==
 
@@ -544,6 +560,12 @@
     ==
   ==
   ;div.powered: powered by ~ urbit
+  ;div.powered2
+    ;p 
+      ; get yours 
+      ;a/"https://redhorizon.com": here
+    ==
+  ==
 == 
 ::
 ++  admin-front-page
@@ -592,8 +614,15 @@
       ==
       ;input(type "hidden", name "index", value "{<q.n>}");
     ==
+    ;div(class "refresh", hx-get "/apps/ama", hx-target "body", hx-swap "outerHTML", hx-trigger "click");
   ==
   ;div.powered: powered by ~ urbit
+  ;div.powered2
+    ;p 
+      ; get yours 
+      ;a/"https://redhorizon.com": here
+    ==
+  ==
 ==
 
 ++  settings-form
@@ -625,16 +654,7 @@
     ;div.question-container
       ;div.container-form
         ;div.container-form-header
-          ;div(class "image")
-          ;+  %.  our.bowl
-              %_  sigil
-                size    40
-                fg      "white"
-                bg      "black"
-                margin  & 
-                icon    &
-              ==
-          == 
+          ;+  profile-image
           ;+  settings-form
           ;+  settings-icon-check
         ==
@@ -661,8 +681,15 @@
         ;span(class "answer-text"): {(trip answer.p.n)}
       ==
     ==
+    ;div(class "refresh", hx-get "/apps/ama/settings", hx-target "body", hx-swap "outerHTML", hx-trigger "click");
   ==
   ;div.powered: powered by ~ urbit
+  ;div.powered2
+    ;p 
+      ; get yours 
+      ;a/"https://redhorizon.com": here
+    ==
+  ==
 ==
 
 ++  admin-inbox-page-body
@@ -683,7 +710,7 @@
           ;span(class "question-text"): {(trip -.q)}
         ==
         ;form(id "question-form")
-          ;textarea(name "question-input", placeholder "A:");
+          ;textarea(name "question-input", placeholder "A:", required "");
           ;input(type "hidden", name "index", value "{<+.q>}");
           ;button(class "send-button", type "input", form "question-form", name "send-answer", value "send-answer", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
             ;+  send-inbox-icon
@@ -693,6 +720,12 @@
     ==
   ==
   ;div.powered: powered by ~ urbit
+  ;div.powered2
+    ;p 
+      ; get yours 
+      ;a/"https://redhorizon.com": here
+    ==
+  ==
 ==
 
 ++  admin-settings-page-inbox
@@ -703,13 +736,13 @@
     ;+  return-icon 
     ;+  settings-icon-inbox-check
     ==
-    ;div.question-container
+    ;div.question-container 
       ;*  
       %+  turn  inbox-question
-      |=  q=[@t @ud]
+      |=  q=[@t @ud] 
       ;div.container-form
         ;div(class "question")
-          ;button(class "x-button", type "input", name "index", value "{<+.q>}", hx-post "/apps/ama", hx-swap "delete", hx-target "closest .container-form")
+          ;button(class "x-button", type "input", name "index", value "{<+.q>}", hx-post "/apps/ama/settings/inbox", hx-swap "outerHTML", hx-target "body")
             ;+  delete-button-icon
           ==
           ;div.question-label: Q:  
@@ -724,10 +757,11 @@
         ==
       ==
     ==
+    ;div(class "refresh", hx-get "/apps/ama/settings/inbox", hx-target "body", hx-swap "outerHTML", hx-trigger "click");
   ==
   ;div.powered: powered by ~ urbit
+  ;div.powered: get yous here
 ==
-
 
 
 

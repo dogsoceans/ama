@@ -305,6 +305,34 @@ input[name="name"] {
     bottom: 3px;
     right: 3px
   }
+  .powered {
+    font-family: Urbit Sans;
+    font-size: 24px;
+    padding: 10px;
+    color:#ffffff;
+    font-weight: 600;
+    text-align: right;
+    position: fixed;
+    bottom: 30px;
+    right: 3px;
+    z-index: -1;
+  }
+  .powered2 {
+    font-family: Urbit Sans;
+    font-size: 20px;
+    padding: 10px;
+    color:#ffffff;
+    font-weight: 600;
+    text-align: right;
+    position: fixed;
+    bottom: -16px;
+    right: 3px;
+    z-index: -1;
+
+  }
+  a {
+    text-decoration: none; 
+  }
   
   footer {
     display: flex;
@@ -367,4 +395,5 @@ input[name="name"] {
     font-weight: 500;
     font-style: normal;
   }
+  
   

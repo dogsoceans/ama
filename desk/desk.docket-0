@@ -1,9 +1,9 @@
-:~  title+'ama'
-    info+'A schematic agent to brighten your day.'
-    color+0xe4.9b0f
-    image+''
+:~  title+'%ama'
+    info+'Ask Me Anything: A self-hosted AMA board! share your %ama with friends'
+    color+0xe6.3f64
+    image+'https://i.imgur.com/vsFR2av.png'
     version+[0 0 1]
-    website+'https://urbit.org/'
+    website+'https://github.com/dogsoceans/ama'
     license+'MIT'
     site+/apps/ama
 ==
