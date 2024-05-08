@@ -141,7 +141,6 @@
   
   =/  new-state  state(name name.act)
   =.  new-state  new-state(bio bio.act)
-  ~&  image.act
   ?:  =(image.act '')
     =.  new-state  new-state(image ~)
     new-state
@@ -172,7 +171,7 @@
 ::
 ++  http-handler
 |=  [eyre-id=@ta =inbound-request:eyre]
-^-  (quip card _state)
+^-  [(list card) _state]
 =/  body  body.request.inbound-request
 =/  =request-line:server 
   (parse-request-line:server url.request.inbound-request)
@@ -241,7 +240,6 @@
   ::
     %'POST'
   =/  act-p  (action-parser body)
-  ~&  >  act-p
   ?+    site.request-line  
     ?~  act-p  `state
   :_  (action-handler2 act-p)
@@ -270,9 +268,23 @@
       ?~  act-p  `state
          :_  (action-handler2 act-p)
        (send [200 ~['cats3'^'cats3'] [%manx admin-settings-page-front]]) 
+      [%apps %ama %question ~]
+        ~&  >  (build-notification 'new message')
+        ?~  act-p  `state
+          :_  (action-handler2 act-p)
+        (weld (send [200 ~ [%manx admin-front-page]]) (build-notification 'new message'))
   ==
-==
-
+== 
+++  build-notification
+:: note: .^(? %gu /(scot %p our.bol)/hark/(scot %da now.bol)/$)
+:: (checks for hark lol)
+|=  msg=@t
+^-  (list card)
+  =/  id      (end 7 (shas %yoo-notification eny.bowl))
+  =/  rope    [~ ~ q.byk.bowl /(scot %p %zod)/[dap.bowl]]
+  =/  action  [%add-yarn & & id rope now.bowl [ship+our.bowl msg ~] /[dap.bowl] ~]
+  =/  =cage   [%hark-action !>(action)]
+  [%pass /hark %agent [our.bowl %hark] %poke cage]~
 ::
 ++  send-update
   |=  =term
@@ -537,7 +549,7 @@
             ;div(class "bio"): {(trip bio.state)}
           ==
         ==
-        ;form(id "question-form", hx-post "/apps/ama", hx-swap "none", hx-on--after-request "this.reset()")
+        ;form(id "question-form", hx-post "/apps/ama/question", hx-swap "none", hx-on--after-request "this.reset()")
           ;textarea(name "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
         ==
       ==
@@ -559,11 +571,9 @@
       ;input(type "hidden", name "index", value "{<q.n>}");
     ==
   ==
-  ;div.powered: powered by ~ urbit
-  ;div.powered2
+  ;div.powered
     ;p 
-      ; get yours 
-      ;a/"https://redhorizon.com": here
+      ;a(href "https://urbit.org/get-started", target "_blank"): powered by ~ urbit 
     ==
   ==
 == 
@@ -593,7 +603,7 @@
           ==
           ;+  settings-icon
         ==
-        ;form(id "question-form", hx-post "/apps/ama", hx-swap "none", hx-on--after-request "this.reset()")
+        ;form(id "question-form", hx-post "/apps/ama/question", hx-swap "none", hx-on--after-request "this.reset()")
           ;textarea(name "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
         ==
       ==
@@ -616,11 +626,9 @@
     ==
     ;div(class "refresh", hx-get "/apps/ama", hx-target "body", hx-swap "outerHTML", hx-trigger "click");
   ==
-  ;div.powered: powered by ~ urbit
-  ;div.powered2
+  ;div.powered
     ;p 
-      ; get yours 
-      ;a/"https://redhorizon.com": here
+      ;a(href "https://urbit.org/get-started", target "_blank"): powered by ~ urbit 
     ==
   ==
 ==
@@ -658,7 +666,7 @@
           ;+  settings-form
           ;+  settings-icon-check
         ==
-        ;form(id "question-form", hx-post "/apps/ama", hx-swap "none", hx-on--after-request "this.reset()")
+        ;form(id "question-form", hx-post "/apps/ama/question", hx-swap "none", hx-on--after-request "this.reset()")
           ;textarea(name "question-input", placeholder "ask ~nospur-sontud anything. . .", maxlength "140", required "");
         ==
       ==
@@ -683,11 +691,9 @@
     ==
     ;div(class "refresh", hx-get "/apps/ama/settings", hx-target "body", hx-swap "outerHTML", hx-trigger "click");
   ==
-  ;div.powered: powered by ~ urbit
-  ;div.powered2
+  ;div.powered
     ;p 
-      ; get yours 
-      ;a/"https://redhorizon.com": here
+      ;a(href "https://urbit.org/get-started", target "_blank"): powered by ~ urbit 
     ==
   ==
 ==
@@ -719,11 +725,9 @@
       ==
     ==
   ==
-  ;div.powered: powered by ~ urbit
-  ;div.powered2
+  ;div.powered
     ;p 
-      ; get yours 
-      ;a/"https://redhorizon.com": here
+      ;a(href "https://urbit.org/get-started", target "_blank"): powered by ~ urbit 
     ==
   ==
 ==
@@ -759,8 +763,11 @@
     ==
     ;div(class "refresh", hx-get "/apps/ama/settings/inbox", hx-target "body", hx-swap "outerHTML", hx-trigger "click");
   ==
-  ;div.powered: powered by ~ urbit
-  ;div.powered: get yous here
+  ;div.powered
+    ;p 
+      ;a(href "https://urbit.org/get-started", target "_blank"): powered by ~ urbit 
+    ==
+  ==
 ==
 
 

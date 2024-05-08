@@ -305,33 +305,24 @@ input[name="name"] {
     bottom: 3px;
     right: 3px
   }
-  .powered {
+  .powered p {
+    margin: 0px;
+  }
+  .powered:hover {
     font-family: Urbit Sans;
     font-size: 24px;
     padding: 10px;
-    color:#ffffff;
-    font-weight: 600;
-    text-align: right;
-    position: fixed;
-    bottom: 30px;
-    right: 3px;
-    z-index: -1;
+    color:#0a009c;
+    cursor: pointer;
   }
-  .powered2 {
-    font-family: Urbit Sans;
-    font-size: 20px;
-    padding: 10px;
-    color:#ffffff;
-    font-weight: 600;
-    text-align: right;
-    position: fixed;
-    bottom: -16px;
-    right: 3px;
-    z-index: -1;
 
+  .powered a {
+    text-decoration: none;
+    color:#ffffff 
   }
-  a {
-    text-decoration: none; 
+  .powered a:hover {
+    text-decoration: none;
+    color:#0a009c; 
   }
   
   footer {
