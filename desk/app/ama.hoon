@@ -12,7 +12,6 @@
     sigil
 /*  htmx  %js  /app/htmx/js
 /*  ama-js  %js  /app/ama/js
-/*  amazero  %html  /app/amazero/html
 /*  style  %css  /app/style/css
 
 |%
@@ -62,7 +61,7 @@
         %ama-action
       (action-handler !<(action vase))
         %handle-http-request
-      (http-handler !<([@ta inbound-request:eyre] vase))
+      (http-handler:aux !<([@ta inbound-request:eyre] vase))
     ==
   [cards this]
 ::
@@ -269,19 +268,22 @@
          :_  (action-handler2 act-p)
        (send [200 ~['cats3'^'cats3'] [%manx admin-settings-page-front]]) 
       [%apps %ama %question ~]
-        ~&  >  (build-notification 'new message')
+    ?.  authenticated.inbound-request
         ?~  act-p  `state
           :_  (action-handler2 act-p)
-        (weld (send [200 ~ [%manx admin-front-page]]) (build-notification 'new message'))
+        (weld (send [200 ~ [%manx admin-front-page]]) (build-notification ' Somebody asked you a question'))
+      ?~  act-p  `state
+        :_  (action-handler2 act-p)
+      (weld (send [200 ~ [%manx front-page-body]]) (build-notification ' Somebody asked you a question'))
   ==
 == 
 ++  build-notification
-:: note: .^(? %gu /(scot %p our.bol)/hark/(scot %da now.bol)/$)
+:: note: .^(? %gu /(scot %p our.bowl)/hark/(scot %da now.bowl)/$)
 :: (checks for hark lol)
 |=  msg=@t
 ^-  (list card)
   =/  id      (end 7 (shas %yoo-notification eny.bowl))
-  =/  rope    [~ ~ q.byk.bowl /(scot %p %zod)/[dap.bowl]]
+  =/  rope    [~ ~ q.byk.bowl /(scot %p our.bowl)/[dap.bowl]]
   =/  action  [%add-yarn & & id rope now.bowl [ship+our.bowl msg ~] /[dap.bowl] ~]
   =/  =cage   [%hark-action !>(action)]
   [%pass /hark %agent [our.bowl %hark] %poke cage]~
